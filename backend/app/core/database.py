@@ -8,9 +8,14 @@ logger = logging.getLogger(__name__)
 
 def _async_url(url: str) -> str:
     """Normalize postgres URL to asyncpg driver format."""
+
     for prefix in ("postgresql://", "postgres://"):
         if url.startswith(prefix):
-            return "postgresql+asyncpg://" + url[len(prefix):]
+            url = "postgresql+asyncpg://" + url[len(prefix):]
+            break
+
+    url = url.replace("sslmode=require", "ssl=require")
+
     return url
 
 
