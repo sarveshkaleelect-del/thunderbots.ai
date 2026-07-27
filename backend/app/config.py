@@ -63,7 +63,7 @@ class Settings(BaseSettings):
     AUDIT_LOG_RETENTION_DAYS: int = 365
 
     # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:3000"]
+    CORS_ORIGINS: List[str] = ["http://localhost:3000","https://thunderbotsai.vercel.app",]
 
     # ── SMART SHOP ASSISTANT (NEW) ─────────────────────────────────────────
     # Base URL of the deployed frontend, used to build the public customer
