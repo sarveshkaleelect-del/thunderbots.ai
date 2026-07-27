@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}You've been invited to join {{ team_name }} on {{ app_name }}{% endblock %}
+{% block content %}
+  <h1 style="margin:0 0 16px 0; font-size:22px; color:#ffffff; font-weight:700;">You're invited 🎉</h1>
+  <p style="margin:0 0 16px 0;">
+    <strong style="color:#ffffff;">{{ inviter_name }}</strong> invited you to join
+    <strong style="color:#ffffff;">{{ team_name }}</strong> on {{ app_name }} as a
+    <strong style="color:#22d3ee;">{{ role }}</strong>.
+  </p>
+  <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0;">
+    <tr>
+      <td style="border-radius:10px; background-color:#22d3ee;">
+        <a href="{{ accept_url }}" style="display:inline-block; padding:12px 24px; font-size:14px; font-weight:600; color:#020110; text-decoration:none; border-radius:10px;">
+          Accept invitation
+        </a>
+      </td>
+    </tr>
+  </table>
+  <p style="margin:0; color:#9ca3af; font-size:13px;">
+    If you don't have a {{ app_name }} account yet, you'll be able to create one with this email address before joining.
+  </p>
+{% endblock %}
+{% block footer %}
+This invitation was sent because someone listed your email address when inviting teammates to a workspace on {{ app_name }}.
+{% endblock %}

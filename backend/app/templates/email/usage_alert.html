@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ headline }}{% endblock %}
+{% block content %}
+  <h1 style="margin:0 0 16px 0; font-size:22px; color:#ffffff; font-weight:700;">{{ headline }}</h1>
+  <p style="margin:0 0 16px 0;">
+    Hi {{ user_name }}, {{ message }}
+  </p>
+  {% if cta_url and cta_label %}
+  <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0;">
+    <tr>
+      <td style="border-radius:10px; background-color:#22d3ee;">
+        <a href="{{ cta_url }}" style="display:inline-block; padding:12px 24px; font-size:14px; font-weight:600; color:#020110; text-decoration:none; border-radius:10px;">
+          {{ cta_label }}
+        </a>
+      </td>
+    </tr>
+  </table>
+  {% endif %}
+{% endblock %}

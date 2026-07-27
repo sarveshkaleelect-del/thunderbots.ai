@@ -1,0 +1,1789 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* PERF FIX (v107): the render-blocking `@import url('https://fonts.googleapis.com/...')`
+   that used to live here has been removed. The same Inter/JetBrains Mono
+   stylesheet is now loaded via a non-blocking <link rel="stylesheet"> in
+   app/layout.tsx's <head> (plus <link rel="preconnect">) instead of a
+   blocking CSS @import — same fonts/weights, faster delivery. */
+
+:root,
+[data-theme="dark"] {
+  --bg:           #08080a;
+  --surface:      #0c0c0f;
+  --panel:        #111114;
+  --border:       #1c1c20;
+  --border-hover: #2a2a30;
+  --hover:        #18181c;
+  --accent:       #6366f1;
+  --accent-hover: #5558e8;
+  --accent-dim:   rgba(99,102,241,0.15);
+  --accent-glow:  rgba(99,102,241,0.35);
+  --accent-light-text: #a5b4fc;
+  --accent-text:       #818cf8;
+
+  --fg:        #ffffff;
+  --fg-rgb:    255,255,255;
+  --tint-rgb:  255,255,255;
+  --page-bg-image-1: rgba(99,102,241,0.08);
+  --page-bg-image-2: rgba(99,102,241,0.04);
+
+  --glass-sheen-1: rgba(255,255,255,0.045);
+  --glass-sheen-2: rgba(255,255,255,0.015);
+  --topbar-bg:     rgba(8,8,10,0.72);
+  --code-bg:       rgba(255,255,255,0.07);
+  --pre-bg:        rgba(255,255,255,0.04);
+  --input-bg:      #1a1a1a;
+  --input-border:  #2a2a2a;
+  --input-text:    rgba(255,255,255,0.85);
+  --input-placeholder: rgba(255,255,255,0.25);
+  --skeleton-1:    #111114;
+  --skeleton-2:    #1c1c20;
+  --aurora-1: rgba(99,102,241,0.10);
+  --aurora-2: rgba(34,211,238,0.07);
+  --aurora-3: rgba(99,102,241,0.05);
+  --canvas-base: #020110;
+  --canvas-g1: rgba(129,140,248,0.07);
+  --canvas-g2: rgba(147,51,234,0.05);
+  --canvas-g3: rgba(147,112,219,0.03);
+
+  /* App-shell (non-builder) design tokens — dual purple/cyan electric
+     accent, layered on top of the builder's existing palette without
+     touching any of the variables above. */
+  --tb2-cyan:        #22d3ee;
+  --tb2-cyan-dim:    rgba(34,211,238,0.14);
+  --tb2-cyan-glow:   rgba(34,211,238,0.35);
+  --tb2-glass:       rgba(17,17,20,0.6);
+  --tb2-glass-brd:   rgba(255,255,255,0.08);
+  --tb2-danger:      #f87171;
+  --tb2-success:     #34d399;
+  --tb2-warning:     #fbbf24;
+}
+
+/* Light — clean white professional SaaS */
+[data-theme="light"] {
+  --bg:           #ffffff;
+  --surface:      #f7f8fa;
+  --panel:        #ffffff;
+  --border:       #e5e7eb;
+  --border-hover: #d1d5db;
+  --hover:        #f3f4f6;
+  --accent:       #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-dim:   rgba(79,70,229,0.10);
+  --accent-glow:  rgba(79,70,229,0.25);
+  --accent-light-text: #4338ca;
+  --accent-text:       #4f46e5;
+
+  --fg:        #0f0f14;
+  --fg-rgb:    15,15,20;
+  --tint-rgb:  0,0,0;
+  --page-bg-image-1: rgba(79,70,229,0.05);
+  --page-bg-image-2: rgba(79,70,229,0.02);
+
+  --glass-sheen-1: rgba(0,0,0,0.025);
+  --glass-sheen-2: rgba(0,0,0,0.008);
+  --topbar-bg:     rgba(255,255,255,0.82);
+  --code-bg:       rgba(0,0,0,0.05);
+  --pre-bg:        rgba(0,0,0,0.03);
+  --input-bg:      #ffffff;
+  --input-border:  #d1d5db;
+  --input-text:    rgba(15,15,20,0.88);
+  --input-placeholder: rgba(15,15,20,0.35);
+  --skeleton-1:    #eceef1;
+  --skeleton-2:    #e0e2e7;
+  --aurora-1: rgba(79,70,229,0.05);
+  --aurora-2: rgba(14,165,233,0.04);
+  --aurora-3: rgba(79,70,229,0.03);
+  --canvas-base: #f5f6f8;
+  --canvas-g1: rgba(79,70,229,0.05);
+  --canvas-g2: rgba(147,51,234,0.03);
+  --canvas-g3: rgba(14,165,233,0.03);
+
+  --tb2-cyan:        #0891b2;
+  --tb2-cyan-dim:    rgba(8,145,178,0.10);
+  --tb2-cyan-glow:   rgba(8,145,178,0.22);
+  --tb2-glass:       rgba(255,255,255,0.7);
+  --tb2-glass-brd:   rgba(15,15,20,0.09);
+  --tb2-danger:      #dc2626;
+  --tb2-success:     #059669;
+  --tb2-warning:     #d97706;
+}
+
+/* Midnight — dark navy with blue accents */
+[data-theme="midnight"] {
+  --bg:           #060912;
+  --surface:      #0a0f1e;
+  --panel:        #0d1424;
+  --border:       #1b2740;
+  --border-hover: #2a3a5c;
+  --hover:        #101a2e;
+  --accent:       #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-dim:   rgba(59,130,246,0.15);
+  --accent-glow:  rgba(59,130,246,0.35);
+  --accent-light-text: #93c5fd;
+  --accent-text:       #60a5fa;
+
+  --fg:        #ffffff;
+  --fg-rgb:    255,255,255;
+  --tint-rgb:  255,255,255;
+  --page-bg-image-1: rgba(59,130,246,0.10);
+  --page-bg-image-2: rgba(59,130,246,0.05);
+
+  --glass-sheen-1: rgba(255,255,255,0.04);
+  --glass-sheen-2: rgba(255,255,255,0.014);
+  --topbar-bg:     rgba(6,9,18,0.74);
+  --code-bg:       rgba(255,255,255,0.06);
+  --pre-bg:        rgba(255,255,255,0.04);
+  --input-bg:      #101a2e;
+  --input-border:  #26375a;
+  --input-text:    rgba(255,255,255,0.85);
+  --input-placeholder: rgba(255,255,255,0.25);
+  --skeleton-1:    #0d1424;
+  --skeleton-2:    #1b2740;
+  --aurora-1: rgba(59,130,246,0.10);
+  --aurora-2: rgba(34,211,238,0.06);
+  --aurora-3: rgba(59,130,246,0.05);
+  --canvas-base: #030614;
+  --canvas-g1: rgba(96,165,250,0.08);
+  --canvas-g2: rgba(59,130,246,0.05);
+  --canvas-g3: rgba(147,197,253,0.03);
+
+  --tb2-cyan:        #38bdf8;
+  --tb2-cyan-dim:    rgba(56,189,248,0.14);
+  --tb2-cyan-glow:   rgba(56,189,248,0.35);
+  --tb2-glass:       rgba(13,20,36,0.62);
+  --tb2-glass-brd:   rgba(255,255,255,0.08);
+  --tb2-danger:      #f87171;
+  --tb2-success:     #34d399;
+  --tb2-warning:     #fbbf24;
+}
+
+/* Thunder — dark with ThunderBots purple/blue branding */
+[data-theme="thunder"] {
+  --bg:           #0a0612;
+  --surface:      #0f0a1a;
+  --panel:        #140e22;
+  --border:       #241a3a;
+  --border-hover: #33244f;
+  --hover:        #180f28;
+  --accent:       #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-dim:   rgba(124,58,237,0.15);
+  --accent-glow:  rgba(124,58,237,0.35);
+  --accent-light-text: #c4b5fd;
+  --accent-text:       #a78bfa;
+
+  --fg:        #ffffff;
+  --fg-rgb:    255,255,255;
+  --tint-rgb:  255,255,255;
+  --page-bg-image-1: rgba(124,58,237,0.10);
+  --page-bg-image-2: rgba(34,211,238,0.05);
+
+  --glass-sheen-1: rgba(255,255,255,0.045);
+  --glass-sheen-2: rgba(255,255,255,0.015);
+  --topbar-bg:     rgba(10,6,18,0.74);
+  --code-bg:       rgba(255,255,255,0.07);
+  --pre-bg:        rgba(255,255,255,0.04);
+  --input-bg:      #180f28;
+  --input-border:  #33244f;
+  --input-text:    rgba(255,255,255,0.85);
+  --input-placeholder: rgba(255,255,255,0.25);
+  --skeleton-1:    #140e22;
+  --skeleton-2:    #241a3a;
+  --aurora-1: rgba(124,58,237,0.12);
+  --aurora-2: rgba(34,211,238,0.08);
+  --aurora-3: rgba(124,58,237,0.05);
+  --canvas-base: #020110;
+  --canvas-g1: rgba(168,139,250,0.09);
+  --canvas-g2: rgba(147,51,234,0.06);
+  --canvas-g3: rgba(34,211,238,0.04);
+
+  --tb2-cyan:        #22d3ee;
+  --tb2-cyan-dim:    rgba(34,211,238,0.16);
+  --tb2-cyan-glow:   rgba(34,211,238,0.38);
+  --tb2-glass:       rgba(20,14,34,0.62);
+  --tb2-glass-brd:   rgba(196,181,253,0.14);
+  --tb2-danger:      #f87171;
+  --tb2-success:     #34d399;
+  --tb2-warning:     #fbbf24;
+}
+
+* { box-sizing: border-box; }
+
+html { color-scheme: dark; }
+[data-theme="light"] { color-scheme: light; }
+
+/* Targeted transition window, toggled for ~260ms by ThemeProvider
+   during a theme switch only — smooth crossfade without paying a
+   permanent transition cost on every element for the rest of the
+   session (no performance impact at rest). */
+.tb-theme-transition,
+.tb-theme-transition * {
+  transition: background-color 0.22s ease, border-color 0.22s ease,
+              color 0.22s ease, fill 0.22s ease, stroke 0.22s ease,
+              box-shadow 0.22s ease !important;
+}
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, var(--page-bg-image-1), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, var(--page-bg-image-2), transparent);
+  background-attachment: fixed;
+  color: var(--fg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01' 1, 'cv11' 1;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SCROLLING SYSTEM — single source of truth for page scroll mechanics.
+   The document (html/body) is the app's ONE and ONLY vertical scroll
+   container; there is no nested #__next/app-root wrapper in the Next.js
+   App Router (this file's <body> in app/layout.tsx *is* the root), so
+   giving it a real height and letting ordinary block flow fill it is
+   what keeps every app-shell page (tb2-shell: dashboard, teams,
+   marketplace, analytics, whatsapp, help, settings, …) down to exactly
+   one scrollbar. The sticky header (.tb2-topbar, position: sticky)
+   pins itself to that single scroll — it never needs (and must never
+   get) an overflow-y container of its own, which is what would create
+   a second, competing scrollbar and scroll-chaining between the two.
+   overflow-x stays hidden as the safety net of last resort (mirrors the
+   existing rule below); scroll-behavior + overscroll-behavior make the
+   single scroll smooth and stop it from chaining into browser
+   back/forward swipe or a parent scroller on trackpads.
+   ══════════════════════════════════════════════════════════════════ */
+html, body {
+  height: 100%;
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+html, body {
+  overscroll-behavior-y: none;
+}
+
+/* Mobile/responsive safety net — belongs to the layout shell only, not any
+   page's business logic. Stops accidental horizontal scrollbars caused by a
+   single oversized child (a wide table, a long unbroken string, a fixed-px
+   panel) from making the *whole page* scroll sideways on narrow viewports.
+   overflow-x on <html>/<body> is the container of last resort; any element
+   that legitimately needs horizontal scrolling (tables, the builder canvas)
+   opts back in locally via overflow-x: auto on its own wrapper. */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Respect notches / home-indicator safe areas on iOS when a page opts in. */
+.tb-safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.tb-safe-top    { padding-top: env(safe-area-inset-top, 0px); }
+.tb-safe-left   { padding-left: env(safe-area-inset-left, 0px); }
+.tb-safe-right  { padding-right: env(safe-area-inset-right, 0px); }
+
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE FOUNDATION (v114) — app-wide, applies under every existing
+   page/component without touching desktop. Two problems these solve:
+
+   1) iOS Safari auto-zooms the whole page on focusing any input/select/
+      textarea rendered under 16px. Several components across the app
+      (.tb-input included, at 12px) render smaller than that for a
+      compact desktop density — correct on desktop, but triggers
+      unwanted zoom-and-pan on iPhone the moment someone taps a field.
+      Scoped to <768px only, so desktop's compact type scale is
+      untouched; !important is necessary here only because it must
+      win over many pre-existing per-component font-size utilities
+      without editing every one of them individually.
+   2) Real-world thumb targets: WCAG 2.5.5 / Apple HIG / Material both
+      land on ~44px as the minimum comfortable tap target. Icon-only
+      buttons and nav items built for a mouse cursor are frequently
+      smaller. Rather than resize every button visually (which would
+      bloat compact desktop toolbars), the invisible tap area is
+      expanded via a pseudo-element hit-slop on touch viewports, so the
+      visible chip/icon stays the same size but is easier to hit.
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  input, textarea, select,
+  .tb-input, [contenteditable="true"] {
+    font-size: 16px !important;
+  }
+
+  /* Any interactive element explicitly opted in via this class gets a
+     44x44 minimum hit area without changing its visible box size. */
+  .tb-tap-target {
+    position: relative;
+  }
+  .tb-tap-target::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+  }
+
+  /* Belt-and-suspenders floor for common bare icon-button patterns that
+     weren't already given explicit padding/sizing. Only fires when an
+     element opts in via data attribute (set on IconButton-style
+     components) to avoid resizing dense, intentionally-small chips
+     (tags, avatars, badges) that happen to be button-shaped. */
+  [data-tb-icon-btn] {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Disable the 300ms tap-delay / double-tap-to-zoom ghost-click behavior
+   on interactive elements app-wide, on touch devices only. Buttons/links
+   already respond instantly via onClick; this just removes the browser's
+   built-in wait-for-second-tap heuristic so a single tap always registers
+   as a single, immediate action instead of occasionally firing twice. */
+@media (pointer: coarse) {
+  a, button, [role="button"], input, textarea, select, summary {
+    touch-action: manipulation;
+  }
+}
+
+/* Utility for any table/wide-content wrapper that needs a touch-friendly
+   horizontal scroll strip on narrow screens instead of clipping/squeezing. */
+.tb-scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Visible keyboard focus ring everywhere — accessibility floor */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── React Flow ─────────────────────────────────────────────── */
+.react-flow__renderer { outline: none; }
+
+.react-flow__handle {
+  width: 9px !important;
+  height: 9px !important;
+  border-radius: 50% !important;
+  border: 2px solid #0c0c0e !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 2px 5px rgba(0,0,0,0.55) !important;
+  transition: transform 0.14s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.14s ease, border-color 0.14s ease !important;
+  z-index: 20 !important;
+}
+.react-flow__handle:hover {
+  transform: scale(1.55) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 0 0 4px rgba(99,102,241,0.22), 0 2px 6px rgba(0,0,0,0.6) !important;
+}
+.react-flow__handle-connecting { background: var(--accent) !important; }
+.react-flow__handle-valid { box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 0 0 5px rgba(52,211,153,0.28) !important; }
+
+/* Node connection handles render at 9px — fine for a mouse cursor, far
+   below the ~44px comfortable touch target for dragging out a connection
+   on a phone. Rather than grow the visible dot (which would visually
+   clutter dense workflows), give it a transparent, larger hit-area via
+   ::after on touch viewports only — the dot stays the same size, the
+   finger just doesn't need to land exactly on it. */
+@media (pointer: coarse) {
+  .react-flow__handle {
+    position: relative;
+  }
+  .react-flow__handle::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.react-flow__background { background: var(--bg) !important; }
+
+.react-flow__minimap {
+  background: rgba(14,13,18,0.82) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  border-radius: 14px !important;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 36px rgba(0,0,0,0.55), 0 0 0 1px rgba(99,102,241,0.06), inset 0 1px 0 rgba(255,255,255,0.04) !important;
+}
+.react-flow__minimap-mask { fill: rgba(8,7,12,0.72) !important; }
+.react-flow__minimap-node { stroke: rgba(255,255,255,0.12) !important; stroke-width: 1px !important; }
+
+.react-flow__controls {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+}
+.react-flow__controls-button {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: rgba(255,255,255,0.4) !important;
+  fill: rgba(255,255,255,0.4) !important;
+  transition: background-color 0.12s ease, fill 0.12s ease !important;
+}
+.react-flow__controls-button:hover {
+  background: var(--hover) !important;
+  fill: rgba(255,255,255,0.85) !important;
+}
+.react-flow__controls-button:last-child { border-bottom: none !important; }
+
+/* Zoom controls default to a ~26px hit area, well under the 44px touch
+   target minimum — bump them up on touch/mobile widths only. Desktop
+   (min-width 640px) keeps the original compact size unchanged. */
+@media (max-width: 639px) {
+  .react-flow__controls-button {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .react-flow__controls-button svg { width: 16px !important; height: 16px !important; }
+  /* The minimap can dominate a phone-sized canvas; shrink and it's hidden
+     entirely below `sm` via the `hidden sm:block` class on <MiniMap>. */
+}
+
+
+/* Connection line dashed animation — the live line drawn while dragging
+   a new connection out of a handle. */
+.react-flow__connection-path {
+  stroke-dasharray: 5 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(99,102,241,0.45));
+  animation: dash 0.6s linear infinite;
+}
+@keyframes dash { to { stroke-dashoffset: -18; } }
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+/* Theme-aware — was hardcoded dark-only, so the light theme used to
+   scroll with a near-invisible-on-white thumb. Now tracks the same
+   border tokens the rest of the app shell already uses. */
+* { scrollbar-width: thin; scrollbar-color: var(--border-hover) transparent; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+
+/* ── Animations ─────────────────────────────────────────────── */
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn  { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes shimmer  { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+@keyframes glowPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.4); } 50% { box-shadow: 0 0 0 6px rgba(99,102,241,0); } }
+
+.animate-fade-in  { animation: fadeIn  0.18s ease-out; }
+.animate-slide-up { animation: slideUp 0.22s cubic-bezier(0.16,1,0.3,1); }
+.animate-scale-in { animation: scaleIn 0.16s cubic-bezier(0.16,1,0.3,1); }
+.animate-glow-pulse { animation: glowPulse 2s infinite; }
+.animate-spin-slow { animation: spin 2.2s linear infinite; }
+
+/* ── Typing indicator ───────────────────────────────────────── */
+@keyframes blink { 0%,80%,100% { opacity: 0.2; } 40% { opacity: 1; } }
+.typing-dot { animation: blink 1.4s infinite both; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ── Chat markdown ──────────────────────────────────────────── */
+.chat-message h1, .chat-message h2, .chat-message h3 { font-weight: 600; margin: 0.75em 0 0.4em; }
+.chat-message h1 { font-size: 1.2em; }
+.chat-message h2 { font-size: 1.05em; }
+.chat-message p  { margin: 0.4em 0; line-height: 1.65; }
+.chat-message ul, .chat-message ol { margin: 0.4em 0; padding-left: 1.5em; }
+.chat-message li { margin: 0.2em 0; }
+.chat-message code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.84em;
+}
+.chat-message pre {
+  background: var(--pre-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1em;
+  margin: 0.6em 0;
+  overflow-x: auto;
+}
+.chat-message pre code { background: none; padding: 0; }
+.chat-message strong { font-weight: 600; color: var(--fg); }
+.chat-message a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.chat-message blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1em;
+  color: rgba(var(--fg-rgb),0.5);
+  margin: 0.6em 0;
+}
+.chat-message table { width: 100%; border-collapse: collapse; margin: 0.6em 0; font-size: 0.85em; }
+.chat-message th, .chat-message td { border: 1px solid var(--border); padding: 0.4em 0.7em; }
+.chat-message th { background: var(--pre-bg); font-weight: 600; }
+
+/* ── Node selection (legacy fallback — superseded by tb-node-* below
+   for shaped nodes, kept for any node not opted into the new shell) ── */
+.react-flow__node.selected > div:not(.tb-node-shell) {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.15) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   ThunderBots Node System (v16) — premium polish pass.
+   Original to ThunderBots: faceted node silhouettes lit by a
+   traveling electric pulse. Node footprint (min/max width, padding)
+   is unchanged — only the silhouette, borders, glow, depth and
+   motion are refined.
+
+   Rendering model: each node is a 3-layer stack —
+     .tb-node-shell   (position: relative; carries the drop-shadow glow
+                        and hosts the connection handles, UNCLIPPED)
+       .tb-node-outline (solid accent-colored fill, clipped to the
+                        node's silhouette — this IS the crisp border)
+         .tb-node-card (the actual card, inset by a hairline margin so
+                        the outline peeks through evenly on every edge,
+                        including diagonal/faceted ones)
+   A plain CSS `border` on a `clip-path` box renders jagged and
+   clips unevenly on diagonal edges — that was the source of the
+   "broken polygon" / "cut corner" look. Filling a second, inset
+   clip-path layer behind the card reproduces a crisp, anti-aliased
+   border on every silhouette. Handles are rendered as siblings of
+   .tb-node-outline (not inside it) so a faceted shape can never crop
+   or misalign a connector dot sitting on its edge.
+   ══════════════════════════════════════════════════════════════════ */
+
+.tb-node-shell {
+  position: relative;
+  cursor: pointer;
+  transition: filter 0.24s cubic-bezier(0.16,1,0.3,1);
+  /* Soft outer glow — always faintly present, tuned per node type via
+     --tb-glow-soft, so every node reads as a lit, premium object even
+     at rest. */
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.35)) drop-shadow(0 0 10px var(--tb-glow-soft, rgba(99,102,241,0.22)));
+}
+.tb-node-shell:hover {
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.35)) drop-shadow(0 0 20px var(--tb-glow-soft, rgba(99,102,241,0.35))) drop-shadow(0 0 4px var(--tb-glow, rgba(99,102,241,0.4)));
+}
+.tb-node-selected-shell {
+  animation: tbSelectedPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes tbSelectedPulse {
+  0%, 100% { filter: drop-shadow(0 8px 20px rgba(0,0,0,0.55)) drop-shadow(0 0 14px var(--tb-glow, rgba(99,102,241,0.6))) drop-shadow(0 0 2px var(--tb-glow, rgba(99,102,241,0.6))); }
+  50%      { filter: drop-shadow(0 8px 20px rgba(0,0,0,0.55)) drop-shadow(0 0 30px var(--tb-glow, rgba(99,102,241,0.6))) drop-shadow(0 0 6px var(--tb-glow, rgba(99,102,241,0.6))); }
+}
+
+/* Outline layer — the crisp colored "border", clipped to the same
+   silhouette as the card sitting on top of it. */
+.tb-node-outline {
+  position: relative;
+  transition: background-color 0.2s ease, filter 0.2s ease;
+}
+.tb-node-selected-shell .tb-node-outline {
+  animation: tbOutlinePulse 2.2s ease-in-out infinite;
+}
+@keyframes tbOutlinePulse {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.5); }
+}
+
+/* Card face — background/content live here, independent of the
+   shell's glow and the outline's border color. */
+.tb-node-card {
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.2s ease, box-shadow 0.24s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.045),
+    inset 0 0 0 1px rgba(255,255,255,0.02),
+    inset 0 22px 30px -22px rgba(255,255,255,0.03),
+    inset 0 -18px 26px -20px rgba(0,0,0,0.5);
+}
+
+/* Inner glow — a soft colored bloom living *inside* the card face,
+   tinted per node type via --tb-grad-from (inherited from the shell).
+   Layered on top of the base card shadow so both effects render at
+   once, and gently intensifies on hover / selection. */
+.tb-node-inner-glow {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.045),
+    inset 0 0 0 1px rgba(255,255,255,0.02),
+    inset 0 22px 30px -22px rgba(255,255,255,0.03),
+    inset 0 -18px 26px -20px rgba(0,0,0,0.5),
+    inset 0 0 26px 0 var(--tb-glow-soft, rgba(99,102,241,0.16));
+}
+.tb-node-shell:hover .tb-node-inner-glow {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    inset 0 0 0 1px rgba(255,255,255,0.025),
+    inset 0 22px 30px -22px rgba(255,255,255,0.035),
+    inset 0 -18px 26px -20px rgba(0,0,0,0.5),
+    inset 0 0 34px 0 var(--tb-glow-soft, rgba(99,102,241,0.24));
+}
+.tb-node-selected-shell .tb-node-inner-glow {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    inset 0 0 0 1px rgba(255,255,255,0.03),
+    inset 0 22px 30px -22px rgba(255,255,255,0.04),
+    inset 0 -18px 26px -20px rgba(0,0,0,0.5),
+    inset 0 0 34px 0 rgba(129,140,248,0.32);
+}
+.tb-node-header { transition: background-color 0.2s ease, border-color 0.2s ease; }
+.tb-node-icon { transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1); display: inline-flex; }
+.tb-node-shell:hover .tb-node-icon { transform: scale(1.16) rotate(-4deg); }
+.tb-node-selected-shell .tb-node-icon { transform: scale(1.1); }
+
+/* Premium corner glow — soft accent bloom, sits below header/body */
+.tb-node-corner-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Node entrance — quick "power-on" settle, unique to ThunderBots */
+@keyframes tbNodeEnter {
+  0%   { opacity: 0; transform: scale(0.9) translateY(6px); filter: brightness(1.6) saturate(1.3); }
+  55%  { opacity: 1; transform: scale(1.018) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1) saturate(1); }
+}
+.tb-node-enter { animation: tbNodeEnter 0.4s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Drag lift — subtle, GPU-only */
+.react-flow__node.dragging .tb-node-shell {
+  filter: drop-shadow(0 18px 32px rgba(0,0,0,0.6)) drop-shadow(0 0 18px var(--tb-glow-soft, rgba(99,102,241,0.4)));
+}
+
+/* Connection handles — sit outside the clipped silhouette (see
+   BaseNode.tsx), styled to read as small glowing beads. */
+.tb-handle { box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 0 8px 0 rgba(0,0,0,0.5) !important; }
+
+/* ── Signature faceted silhouettes (per node type) ───────────────
+   Each shape clips the outline/card box — width/height/padding are
+   untouched, only the outline is redrawn. */
+/* True 8-sided octagon — signature Start node silhouette. Symmetric
+   corner cuts on all four sides. */
+.tb-shape-octagon {
+  clip-path: polygon(
+    30% 0%, 70% 0%, 100% 30%, 100% 70%,
+    70% 100%, 30% 100%, 0% 70%, 0% 30%
+  );
+}
+.tb-shape-hex {
+  clip-path: polygon(50% 0%, 100% 22%, 100% 78%, 50% 100%, 0% 78%, 0% 22%);
+}
+.tb-shape-chamfer {
+  clip-path: polygon(
+    14px 0, calc(100% - 14px) 0, 100% 14px,
+    100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%,
+    0 calc(100% - 14px), 0 14px
+  );
+}
+.tb-shape-octagon-wide {
+  clip-path: polygon(9% 0, 91% 0, 100% 28%, 100% 72%, 91% 100%, 9% 100%, 0 72%, 0 28%);
+}
+.tb-shape-octagon-premium {
+  clip-path: polygon(6% 0, 94% 0, 100% 16%, 100% 84%, 94% 100%, 6% 100%, 0 84%, 0 16%);
+}
+.tb-shape-diamond-octagon {
+  clip-path: polygon(2% 50%, 11% 6%, 28% 0, 72% 0, 89% 6%, 98% 50%, 89% 94%, 72% 100%, 28% 100%, 11% 94%);
+}
+
+/* Premium octagon (AI Agent) gets a faint inner facet line for a
+   "cut gem" feel — purely decorative, no layout impact. */
+.tb-node-premium-ring::after {
+  content: '';
+  position: absolute; inset: 0;
+  clip-path: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Electric current — signature connection-line motion ─────────
+   A slow-traveling dotted pulse layered over the base edge, distinct
+   from any generic dashed-line pattern. */
+.tb-edge-current {
+  animation: tbCurrentFlow 1s linear infinite;
+}
+@keyframes tbCurrentFlow { to { stroke-dashoffset: -20; } }
+
+/* Canvas background — a soft, drifting purple aurora unique to
+   ThunderBots, sits behind the grid/dots layer over a charcoal base,
+   never intercepts pointer events, and stays gentle (not too dark,
+   not overpowering the node colors). */
+.tb-canvas-aurora {
+  position: relative;
+  /* Fixed, stable canvas base — clipped to this element only so the
+     color can never bleed into sibling panels/toolbar. */
+  background: var(--canvas-base);
+  overflow: hidden;
+  isolation: isolate;
+}
+.tb-canvas-aurora::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(760px circle at 16% 8%, var(--canvas-g1), transparent 60%),
+    radial-gradient(680px circle at 88% 92%, var(--canvas-g2), transparent 62%),
+    radial-gradient(920px circle at 50% 50%, var(--canvas-g3), transparent 70%),
+    linear-gradient(160deg, rgba(12,10,26,0.5), rgba(2,1,16,0.2) 45%);
+  /* Opacity-only pulse — no translate/scale, so the background never
+     appears to drift, float, or shift position. */
+  animation: tbAuroraDrift 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+  will-change: opacity;
+}
+.tb-canvas-aurora::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Soft, static ambient light pooling in the middle of the workspace */
+  background: radial-gradient(1200px circle at 50% 0%, rgba(99,102,241,0.05), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes tbAuroraDrift {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.9; }
+}
+
+/* Performance: while actively panning/zooming the canvas or dragging a
+   node/selection, pause the continuously-running decorative animations
+   (electric edge current, aurora drift, selected-node pulse). These are
+   purely cosmetic and re-triggering their paint work every frame during
+   a high-frequency gesture is what causes visible stutter on the canvas.
+   The `.tb-interacting` class is toggled directly on the canvas wrapper
+   via a ref (not React state) so it costs nothing extra to apply, and
+   all animations resume exactly where a human eye expects the instant
+   the gesture ends. */
+.tb-interacting .tb-edge-current,
+.tb-interacting .tb-canvas-aurora::before,
+.tb-interacting .tb-node-selected-shell,
+.tb-interacting .tb-node-selected-shell .tb-node-outline {
+  animation-play-state: paused !important;
+}
+
+/* Subtle glowing grid overlay for the workflow canvas — sits above the
+   aurora, below the nodes. React Flow's own dot/line background layer
+   handles the grid dots; this adds a faint luminous wash so the grid
+   reads as "glowing" rather than flat. */
+.tb-canvas-aurora .react-flow__background {
+  background: transparent !important;
+}
+.tb-canvas-aurora .react-flow__background pattern circle,
+.tb-canvas-aurora .react-flow__background pattern line {
+  filter: drop-shadow(0 0 1.5px rgba(168,139,250,0.35));
+}
+
+/* ── Toolbar / sidebar micro-interactions ─────────────────────── */
+.tb-toolbtn {
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tb-toolbtn:hover:not(:disabled) { transform: translateY(-1px); }
+.tb-toolbtn:active:not(:disabled) { transform: scale(0.9); }
+.tb-toolbtn:disabled { transform: none; }
+
+.tb-savebtn:active { transform: scale(0.96); }
+.tb-savebtn { transition: transform 0.12s ease, background-color 0.15s ease, filter 0.15s ease; }
+
+.tb-lib-item {
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), border-color 0.18s ease,
+              background-color 0.18s ease, box-shadow 0.18s ease;
+}
+.tb-lib-item:hover { transform: translateX(3px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+.tb-lib-item:active { transform: scale(0.97) translateX(1px); }
+.tb-lib-icon { transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1); }
+.tb-lib-item:hover .tb-lib-icon { transform: scale(1.12) rotate(-4deg); }
+
+/* ── Node Library Panel — glassmorphism, purple/blue tint ────────────
+   Frosted panel with a drifting violet/cyan wash behind it, distinct
+   from the flat dark panel it replaces. Purely visual — no change to
+   drag/drop behavior. */
+.tb-lib-panel-glass {
+  background:
+    linear-gradient(180deg, rgba(139,92,246,0.07), rgba(56,189,248,0.03) 55%, rgba(10,9,16,0.5)),
+    rgba(13,11,20,0.62);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-right: 1px solid rgba(168,139,250,0.14);
+  box-shadow: inset -1px 0 0 rgba(255,255,255,0.02), 4px 0 24px rgba(0,0,0,0.25);
+}
+
+/* Draggable node card — frosted glass chip with a colored glow that
+   blooms in on hover/lift and while being dragged onto the canvas. */
+.tb-lib-item-glass {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 14px rgba(0,0,0,0.25);
+}
+.tb-lib-item-glass:hover {
+  transform: translateY(-2px) translateX(2px);
+  border-color: var(--tb-lib-glow, rgba(168,139,250,0.4));
+  background: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02));
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 10px 26px rgba(0,0,0,0.35),
+    0 0 0 1px var(--tb-lib-glow, rgba(168,139,250,0.3)),
+    0 0 22px var(--tb-lib-glow, rgba(168,139,250,0.28));
+}
+.tb-lib-item-glass:active {
+  transform: translateY(-1px) translateX(1px) scale(0.98);
+}
+/* "Active" glow while a node is being picked up and dragged */
+.tb-lib-item-glass:active,
+.tb-lib-item-glass[dragging='true'] {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 10px 30px rgba(0,0,0,0.4),
+    0 0 0 1.5px var(--tb-lib-glow, rgba(168,139,250,0.55)),
+    0 0 28px var(--tb-lib-glow, rgba(168,139,250,0.45));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tb-node-enter, .tb-node-selected-shell, .tb-edge-current, .tb-canvas-aurora::before {
+    animation: none !important;
+  }
+}
+
+/* ── Skeleton loading ───────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton-1) 25%, var(--skeleton-2) 50%, var(--skeleton-1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* ── Premium surface helpers (v5) ──────────────────────────── */
+.surface-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.surface-card:hover {
+  border-color: var(--border-hover);
+  background: var(--hover);
+}
+.btn-primary {
+  background: linear-gradient(180deg, #6e71f4, var(--accent));
+  box-shadow: 0 1px 0 rgba(255,255,255,0.12) inset, 0 4px 16px rgba(99,102,241,0.25);
+  transition: filter 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-primary:hover { filter: brightness(1.07); }
+.btn-primary:active { filter: brightness(0.95); }
+
+/* ── Deploy Experience animations (v6.4) ──────────────────────
+   Lightweight, GPU-friendly (transform/opacity only) so they stay
+   smooth on low-end mobile devices. Respects prefers-reduced-motion
+   via the global rule above. */
+@keyframes tbFadeUp   { from { opacity: 0; transform: translateY(8px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes tbPopIn    { from { opacity: 0; transform: scale(0.92); }     to { opacity: 1; transform: scale(1); } }
+@keyframes tbSlideIn  { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes tbMsgIn    { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.tb-anim-fade-up { animation: tbFadeUp 0.28s cubic-bezier(0.16,1,0.3,1) both; }
+.tb-anim-pop-in  { animation: tbPopIn 0.22s cubic-bezier(0.34,1.56,0.64,1) both; }
+.tb-anim-slide-in { animation: tbSlideIn 0.3s cubic-bezier(0.16,1,0.3,1) both; }
+.tb-anim-msg-in   { animation: tbMsgIn 0.22s cubic-bezier(0.16,1,0.3,1) both; }
+
+.tb-hover-lift { transition: transform 0.14s ease, opacity 0.14s ease, filter 0.14s ease; will-change: transform; }
+.tb-hover-lift:hover { transform: translateY(-1px) scale(1.03); }
+.tb-hover-lift:active { transform: translateY(0) scale(0.97); }
+
+.tb-card { transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease; }
+.tb-card:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.35); }
+
+/* Mobile viewport transitions between desktop/tablet/mobile preview frames */
+.tb-viewport-transition { transition: width 0.28s cubic-bezier(0.16,1,0.3,1), height 0.28s cubic-bezier(0.16,1,0.3,1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tb-chat-theme, .tb-anim-fade-up, .tb-anim-pop-in, .tb-anim-slide-in, .tb-anim-msg-in { animation: none !important; }
+}
+
+.tb-input {
+  width: 100%;
+  background: var(--input-bg);
+  color: var(--input-text);
+  font-size: 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.tb-input:focus { border-color: var(--accent); }
+.tb-input::placeholder { color: var(--input-placeholder); }
+
+/* ══════════════════════════════════════════════════════════════════
+   ThunderBots App-Shell Design System (v14) — original visual
+   language for every screen outside the workflow builder: dashboard,
+   analytics, conversations, knowledge base, providers, WhatsApp,
+   deploy, auth, settings, profile. Additive only — nothing here
+   overrides builder classes (.tb-node-*, .tb-edge-*, .tb-canvas-*,
+   .react-flow__*, .tb-lib-*, .tb-toolbtn, .tb-savebtn).
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Ambient backdrop: a slow-drifting twin-aurora (purple + cyan) behind
+   every app-shell page, distinct from the builder canvas aurora. */
+.tb2-shell {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  isolation: isolate;
+}
+.tb2-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(900px circle at 12% -10%, var(--aurora-1), transparent 55%),
+    radial-gradient(700px circle at 108% 18%, var(--aurora-2), transparent 55%),
+    radial-gradient(800px circle at 50% 120%, var(--aurora-3), transparent 60%);
+  animation: tb2Drift 22s ease-in-out infinite;
+}
+@keyframes tb2Drift {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(-1.5%, 1.5%) scale(1.05); }
+}
+.tb2-shell > * { position: relative; z-index: 1; }
+
+/* Glass surface — the core card primitive for the app shell. */
+.tb2-glass {
+  background: linear-gradient(180deg, var(--glass-sheen-1), var(--glass-sheen-2)), var(--tb2-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--tb2-glass-brd);
+  border-radius: 18px;
+  transition: border-color 0.2s ease, transform 0.2s cubic-bezier(0.16,1,0.3,1), box-shadow 0.2s ease, background 0.2s ease;
+}
+.tb2-glass-hover:hover {
+  border-color: rgba(255,255,255,0.16);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45), 0 0 0 1px rgba(99,102,241,0.08);
+  transform: translateY(-2px);
+}
+
+/* Sticky glass header bar shared by every app-shell page. */
+.tb2-topbar {
+  background: var(--topbar-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--tb2-glass-brd);
+}
+
+/* Row 2 of the two-row header (channels + secondary pages) — a hairline
+   separates it from row 1 so the two rows read as one cohesive bar rather
+   than two stacked ones. */
+.tb2-topbar-row2 {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Lets the primary nav scroll horizontally instead of overflowing past
+   its box (and overlapping the search/notification/account controls) at
+   viewport widths too narrow to fit every item — no wrap, no clipping. */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Electric dual-tone brand mark background used behind the logo glyph. */
+.tb2-brand-mark {
+  background: linear-gradient(135deg, var(--accent-dim), var(--tb2-cyan-dim));
+  border: 1px solid var(--tb2-glass-brd);
+  box-shadow: 0 0 0 1px var(--accent-dim) inset, 0 4px 14px var(--accent-dim);
+}
+
+/* Subtle electric blue/purple glow for the ThunderBots SVG logo mark.
+   Uses filter: drop-shadow (GPU-friendly, respects the logo's alpha
+   channel instead of boxing it) so it stays cheap wherever the logo
+   appears. Brightens slightly on hover; no layout impact either way. */
+.tb2-logo-glow {
+  filter: drop-shadow(0 0 3px var(--accent-glow)) drop-shadow(0 0 7px rgba(34,211,238,0.25));
+  transition: filter 0.2s ease;
+}
+.tb2-logo-glow:hover {
+  filter: drop-shadow(0 0 5px var(--accent-glow)) drop-shadow(0 0 11px rgba(34,211,238,0.4));
+}
+
+/* Gentle breathing glow for the logo on loading screens. */
+@keyframes tb2LogoPulse {
+  0%, 100% { filter: drop-shadow(0 0 3px var(--accent-glow)) drop-shadow(0 0 7px rgba(34,211,238,0.25)); }
+  50%      { filter: drop-shadow(0 0 6px var(--accent-glow)) drop-shadow(0 0 12px rgba(34,211,238,0.45)); }
+}
+.tb2-logo-pulse {
+  animation: tb2LogoPulse 1.6s ease-in-out infinite;
+}
+
+/* Primary CTA — purple→cyan electric gradient, original to ThunderBots. */
+.tb2-btn-primary {
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-hover) 45%, var(--tb2-cyan) 130%);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.16) inset, 0 6px 20px var(--accent-glow);
+  transition: filter 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+}
+.tb2-btn-primary:hover:not(:disabled) { filter: brightness(1.08) saturate(1.05); box-shadow: 0 1px 0 rgba(255,255,255,0.16) inset, 0 8px 26px rgba(34,211,238,0.22); }
+.tb2-btn-primary:active:not(:disabled) { transform: scale(0.98); filter: brightness(0.96); }
+.tb2-btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.tb2-btn-ghost {
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.12s ease;
+}
+.tb2-btn-ghost:active:not(:disabled) { transform: scale(0.97); }
+
+.tb2-btn-danger {
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.12s ease;
+}
+.tb2-btn-danger:active:not(:disabled) { transform: scale(0.97); }
+
+/* Inputs */
+.tb2-field {
+  background: rgba(var(--tint-rgb),0.035);
+  border: 1px solid var(--tb2-glass-brd);
+  transition: border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease;
+}
+.tb2-field:focus-within, .tb2-field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+  background: rgba(var(--tint-rgb),0.05);
+}
+
+/* Icon buttons in nav rails */
+.tb2-iconbtn {
+  transition: transform 0.16s cubic-bezier(0.34,1.56,0.64,1), color 0.16s ease, background-color 0.16s ease;
+}
+.tb2-iconbtn:hover { transform: translateY(-1px); }
+.tb2-iconbtn:active { transform: scale(0.9); }
+
+/* Card lift for grids (workflow cards, provider cards, channel rows) */
+.tb2-card {
+  transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+.tb2-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0,0,0,0.45); }
+.tb2-card:active { transform: translateY(-1px) scale(0.995); }
+
+/* Row press for list-style interactive rows (settings links, table rows) */
+.tb2-row:active { transform: scale(0.994); }
+.tb2-row { transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease; }
+
+/* Nav-tab underline slide */
+.tb2-tab {
+  position: relative;
+  transition: color 0.16s ease;
+}
+.tb2-tab::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s cubic-bezier(0.16,1,0.3,1);
+}
+.tb2-tab-active::after { transform: scaleX(1); }
+
+/* "Create with AI" nav item — subtle persistent electric glow so the
+   primary feature reads as highlighted without disrupting the rest of
+   the nav's styling or layout. Reuses the same accent tokens as the
+   primary CTA button for visual consistency. */
+.tb2-nav-ai-glow {
+  background: linear-gradient(120deg, var(--accent-dim), rgba(34,211,238,0.10));
+  border: 1px solid var(--accent-dim);
+  box-shadow: 0 0 0 1px var(--accent-dim) inset, 0 0 14px var(--accent-glow);
+  transition: filter 0.18s ease, box-shadow 0.18s ease, transform 0.14s cubic-bezier(0.34,1.56,0.64,1);
+}
+.tb2-nav-ai-glow:hover {
+  filter: brightness(1.12) saturate(1.08);
+  box-shadow: 0 0 0 1px var(--accent-dim) inset, 0 0 20px var(--accent-glow);
+  transform: translateY(-1px);
+}
+.tb2-nav-ai-glow:active { transform: scale(0.96); }
+
+/* Modal entrance */
+@keyframes tb2Overlay { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tb2ModalIn { from { opacity: 0; transform: translateY(14px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.tb2-overlay { animation: tb2Overlay 0.15s ease-out both; }
+.tb2-modal   { animation: tb2ModalIn 0.22s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Toasts */
+@keyframes tb2ToastIn  { from { opacity: 0; transform: translateY(10px) scale(0.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes tb2ToastOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(6px) scale(0.96); } }
+.tb2-toast-in  { animation: tb2ToastIn 0.22s cubic-bezier(0.16,1,0.3,1) both; }
+.tb2-toast-out { animation: tb2ToastOut 0.16s ease-in both; }
+
+/* Skeleton shimmer (glass-tinted, distinct gradient from builder's) */
+.tb2-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.045);
+  border-radius: 10px;
+}
+.tb2-skeleton::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: tb2Shimmer 1.6s ease-in-out infinite;
+}
+@keyframes tb2Shimmer { from { background-position: 160% 0; } to { background-position: -60% 0; } }
+
+/* Empty-state icon float */
+@keyframes tb2Float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+.tb2-float { animation: tb2Float 3.4s ease-in-out infinite; }
+
+/* Page-load entrance for content sections, staggered via inline delay */
+@keyframes tb2Rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.tb2-rise { animation: tb2Rise 0.36s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Status dot pulse (live/connected indicators) */
+@keyframes tb2Pulse { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.55); } 100% { box-shadow: 0 0 0 6px rgba(52,211,153,0); } }
+.tb2-pulse-dot { animation: tb2Pulse 1.8s ease-out infinite; }
+
+/* Tooltip — shares the glass surface + accent tokens used by
+   Card/Modal/Toast so it reads as the same design system. */
+.tb2-tooltip {
+  background: linear-gradient(180deg, var(--glass-sheen-1), var(--glass-sheen-2)), var(--tb2-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--tb2-glass-brd);
+  color: rgba(var(--fg-rgb), 0.92);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,0,0,0.04);
+  animation: tb2TooltipIn 0.12s cubic-bezier(0.16,1,0.3,1) both;
+}
+.tb2-tooltip-arrow {
+  background: var(--tb2-glass);
+  border: 1px solid var(--tb2-glass-brd);
+}
+@keyframes tb2TooltipIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+
+/* Page transition — applied to the app-shell's route content wrapper
+   only (keyed by pathname), so navigating between pages fades/rises
+   in instead of popping. Reuses the existing tb2Rise keyframe. */
+.tb2-page-transition { animation: tb2Rise 0.28s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Popover / dropdown menus (notifications, appearance, account) —
+   fade + slight scale + slide down from the trigger, top-anchored. */
+@keyframes tb2PopoverIn { from { opacity: 0; transform: translateY(-6px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.tb2-popover-in { animation: tb2PopoverIn 0.16s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Soft glow blob — ambient decorative accent used behind hero /
+   empty-state icons. Fade + gentle pulse only, no motion/translation. */
+@keyframes tb2GlowSoft { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.85; } }
+.tb2-glow-blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(40px);
+  pointer-events: none;
+  animation: tb2GlowSoft 4s ease-in-out infinite;
+}
+
+/* Filter chip active state */
+.tb2-chip {
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.12s ease;
+}
+.tb2-chip:active { transform: scale(0.96); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tb2-shell::before, .tb2-float, .tb2-pulse-dot, .tb2-rise, .tb2-card, .tb2-glass-hover,
+  .tb2-tooltip, .tb2-page-transition, .tb2-popover-in, .tb2-glow-blob { animation: none !important; }
+}
+
+/* ============================================================
+   Theme override layer - remaps hardcoded Tailwind arbitrary-
+   value utility classes (bg-[#hex], border-[#hex], text-white/NN,
+   etc) onto the active theme tokens, without editing every
+   component file. Selector specificity already exceeds the
+   plain utility class; !important also beats variant utilities.
+   ============================================================ */
+
+[data-theme="light"] .bg-\[\#6366f1\] { background-color: var(--accent) !important; }
+[data-theme="light"] .border-\[\#6366f1\] { border-color: var(--accent) !important; }
+[data-theme="light"] .border-\[\#1e1e1e\] { border-color: var(--border) !important; }
+[data-theme="light"] .border-\[\#2a2a2a\] { border-color: var(--border-hover) !important; }
+[data-theme="light"] .text-\[\#a5b4fc\] { color: var(--accent-light-text) !important; }
+[data-theme="light"] .border-\[\#1a1a1a\] { border-color: var(--border) !important; }
+[data-theme="light"] .bg-\[\#111\] { background-color: var(--surface) !important; }
+[data-theme="light"] .bg-\[\#1a1a1a\] { background-color: var(--panel) !important; }
+[data-theme="light"] .text-\[\#818cf8\] { color: var(--accent-text) !important; }
+[data-theme="light"] .bg-\[\#141414\] { background-color: var(--surface) !important; }
+[data-theme="light"] .bg-\[\#0d0d0d\] { background-color: var(--surface) !important; }
+[data-theme="light"] .bg-\[\#5558e8\] { background-color: var(--accent-hover) !important; }
+[data-theme="light"] .bg-\[\#1e1e1e\] { background-color: var(--panel) !important; }
+[data-theme="light"] .border-\[\#3a3a3a\] { border-color: var(--border-hover) !important; }
+[data-theme="light"] .border-\[\#222\] { border-color: var(--border) !important; }
+[data-theme="light"] .text-\[\#6366f1\] { color: var(--accent) !important; }
+[data-theme="light"] .bg-\[\#2a2a2a\] { background-color: var(--hover) !important; }
+[data-theme="light"] .border-\[\#242424\] { border-color: var(--border) !important; }
+[data-theme="light"] .bg-\[\#242424\] { background-color: var(--hover) !important; }
+[data-theme="light"] .border-\[\#333\] { border-color: var(--border-hover) !important; }
+[data-theme="light"] .bg-\[\#161616\] { background-color: var(--surface) !important; }
+[data-theme="light"] .bg-\[\#070708\] { background-color: var(--bg) !important; }
+[data-theme="light"] .accent-\[\#6366f1\] { accent-color: var(--accent) !important; }
+[data-theme="light"] .bg-\[\#222\] { background-color: var(--hover) !important; }
+[data-theme="light"] .bg-\[\#0a0a0a\] { background-color: var(--bg) !important; }
+[data-theme="light"] .bg-\[\#090909\] { background-color: var(--bg) !important; }
+[data-theme="light"] .bg-\[\#080808\] { background-color: var(--bg) !important; }
+[data-theme="light"] .divide-\[\#1a1a1a\] { border-color: var(--border) !important; }
+[data-theme="light"] .border-\[\#141414\] { border-color: var(--surface) !important; }
+[data-theme="light"] .bg-\[\#818cf8\] { background-color: var(--accent-text) !important; }
+[data-theme="light"] .bg-\[\#0f0f0f\] { background-color: var(--bg) !important; }
+[data-theme="light"] .bg-\[\#0b0b0b\] { background-color: var(--bg) !important; }
+[data-theme="light"] .bg-\[\#0a0912\] { background-color: var(--bg) !important; }
+[data-theme="light"] .shadow-\[\#6366f1\] { --tw-shadow-color: var(--accent) !important; }
+[data-theme="light"] .focus\:border-\[\#6366f1\]:focus { border-color: var(--accent) !important; }
+[data-theme="light"] .hover\:bg-\[\#5558e8\]:hover { background-color: var(--accent-hover) !important; }
+[data-theme="light"] .hover\:border-\[\#3a3a3a\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="light"] .hover\:bg-\[\#6366f1\]:hover { background-color: var(--accent) !important; }
+[data-theme="light"] .hover\:bg-\[\#141414\]:hover { background-color: var(--surface) !important; }
+[data-theme="light"] .hover\:border-\[\#6366f1\]:hover { border-color: var(--accent) !important; }
+[data-theme="light"] .hover\:border-\[\#2a2a2a\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="light"] .hover\:border-\[\#333\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="light"] .hover\:bg-\[\#222\]:hover { background-color: var(--hover) !important; }
+[data-theme="light"] .hover\:text-\[\#818cf8\]:hover { color: var(--accent-text) !important; }
+[data-theme="light"] .hover\:bg-\[\#2a2a2a\]:hover { background-color: var(--hover) !important; }
+[data-theme="light"] .hover\:bg-\[\#1e1e1e\]:hover { background-color: var(--panel) !important; }
+[data-theme="light"] .hover\:bg-\[\#161616\]:hover { background-color: var(--surface) !important; }
+
+[data-theme="midnight"] .bg-\[\#6366f1\] { background-color: var(--accent) !important; }
+[data-theme="midnight"] .border-\[\#6366f1\] { border-color: var(--accent) !important; }
+[data-theme="midnight"] .border-\[\#1e1e1e\] { border-color: var(--border) !important; }
+[data-theme="midnight"] .border-\[\#2a2a2a\] { border-color: var(--border-hover) !important; }
+[data-theme="midnight"] .text-\[\#a5b4fc\] { color: var(--accent-light-text) !important; }
+[data-theme="midnight"] .border-\[\#1a1a1a\] { border-color: var(--border) !important; }
+[data-theme="midnight"] .bg-\[\#111\] { background-color: var(--surface) !important; }
+[data-theme="midnight"] .bg-\[\#1a1a1a\] { background-color: var(--panel) !important; }
+[data-theme="midnight"] .text-\[\#818cf8\] { color: var(--accent-text) !important; }
+[data-theme="midnight"] .bg-\[\#141414\] { background-color: var(--surface) !important; }
+[data-theme="midnight"] .bg-\[\#0d0d0d\] { background-color: var(--surface) !important; }
+[data-theme="midnight"] .bg-\[\#5558e8\] { background-color: var(--accent-hover) !important; }
+[data-theme="midnight"] .bg-\[\#1e1e1e\] { background-color: var(--panel) !important; }
+[data-theme="midnight"] .border-\[\#3a3a3a\] { border-color: var(--border-hover) !important; }
+[data-theme="midnight"] .border-\[\#222\] { border-color: var(--border) !important; }
+[data-theme="midnight"] .text-\[\#6366f1\] { color: var(--accent) !important; }
+[data-theme="midnight"] .bg-\[\#2a2a2a\] { background-color: var(--hover) !important; }
+[data-theme="midnight"] .border-\[\#242424\] { border-color: var(--border) !important; }
+[data-theme="midnight"] .bg-\[\#242424\] { background-color: var(--hover) !important; }
+[data-theme="midnight"] .border-\[\#333\] { border-color: var(--border-hover) !important; }
+[data-theme="midnight"] .bg-\[\#161616\] { background-color: var(--surface) !important; }
+[data-theme="midnight"] .bg-\[\#070708\] { background-color: var(--bg) !important; }
+[data-theme="midnight"] .accent-\[\#6366f1\] { accent-color: var(--accent) !important; }
+[data-theme="midnight"] .bg-\[\#222\] { background-color: var(--hover) !important; }
+[data-theme="midnight"] .bg-\[\#0a0a0a\] { background-color: var(--bg) !important; }
+[data-theme="midnight"] .bg-\[\#090909\] { background-color: var(--bg) !important; }
+[data-theme="midnight"] .bg-\[\#080808\] { background-color: var(--bg) !important; }
+[data-theme="midnight"] .divide-\[\#1a1a1a\] { border-color: var(--border) !important; }
+[data-theme="midnight"] .border-\[\#141414\] { border-color: var(--surface) !important; }
+[data-theme="midnight"] .bg-\[\#818cf8\] { background-color: var(--accent-text) !important; }
+[data-theme="midnight"] .bg-\[\#0f0f0f\] { background-color: var(--bg) !important; }
+[data-theme="midnight"] .bg-\[\#0b0b0b\] { background-color: var(--bg) !important; }
+[data-theme="midnight"] .bg-\[\#0a0912\] { background-color: var(--bg) !important; }
+[data-theme="midnight"] .shadow-\[\#6366f1\] { --tw-shadow-color: var(--accent) !important; }
+[data-theme="midnight"] .focus\:border-\[\#6366f1\]:focus { border-color: var(--accent) !important; }
+[data-theme="midnight"] .hover\:bg-\[\#5558e8\]:hover { background-color: var(--accent-hover) !important; }
+[data-theme="midnight"] .hover\:border-\[\#3a3a3a\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="midnight"] .hover\:bg-\[\#6366f1\]:hover { background-color: var(--accent) !important; }
+[data-theme="midnight"] .hover\:bg-\[\#141414\]:hover { background-color: var(--surface) !important; }
+[data-theme="midnight"] .hover\:border-\[\#6366f1\]:hover { border-color: var(--accent) !important; }
+[data-theme="midnight"] .hover\:border-\[\#2a2a2a\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="midnight"] .hover\:border-\[\#333\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="midnight"] .hover\:bg-\[\#222\]:hover { background-color: var(--hover) !important; }
+[data-theme="midnight"] .hover\:text-\[\#818cf8\]:hover { color: var(--accent-text) !important; }
+[data-theme="midnight"] .hover\:bg-\[\#2a2a2a\]:hover { background-color: var(--hover) !important; }
+[data-theme="midnight"] .hover\:bg-\[\#1e1e1e\]:hover { background-color: var(--panel) !important; }
+[data-theme="midnight"] .hover\:bg-\[\#161616\]:hover { background-color: var(--surface) !important; }
+
+[data-theme="thunder"] .bg-\[\#6366f1\] { background-color: var(--accent) !important; }
+[data-theme="thunder"] .border-\[\#6366f1\] { border-color: var(--accent) !important; }
+[data-theme="thunder"] .border-\[\#1e1e1e\] { border-color: var(--border) !important; }
+[data-theme="thunder"] .border-\[\#2a2a2a\] { border-color: var(--border-hover) !important; }
+[data-theme="thunder"] .text-\[\#a5b4fc\] { color: var(--accent-light-text) !important; }
+[data-theme="thunder"] .border-\[\#1a1a1a\] { border-color: var(--border) !important; }
+[data-theme="thunder"] .bg-\[\#111\] { background-color: var(--surface) !important; }
+[data-theme="thunder"] .bg-\[\#1a1a1a\] { background-color: var(--panel) !important; }
+[data-theme="thunder"] .text-\[\#818cf8\] { color: var(--accent-text) !important; }
+[data-theme="thunder"] .bg-\[\#141414\] { background-color: var(--surface) !important; }
+[data-theme="thunder"] .bg-\[\#0d0d0d\] { background-color: var(--surface) !important; }
+[data-theme="thunder"] .bg-\[\#5558e8\] { background-color: var(--accent-hover) !important; }
+[data-theme="thunder"] .bg-\[\#1e1e1e\] { background-color: var(--panel) !important; }
+[data-theme="thunder"] .border-\[\#3a3a3a\] { border-color: var(--border-hover) !important; }
+[data-theme="thunder"] .border-\[\#222\] { border-color: var(--border) !important; }
+[data-theme="thunder"] .text-\[\#6366f1\] { color: var(--accent) !important; }
+[data-theme="thunder"] .bg-\[\#2a2a2a\] { background-color: var(--hover) !important; }
+[data-theme="thunder"] .border-\[\#242424\] { border-color: var(--border) !important; }
+[data-theme="thunder"] .bg-\[\#242424\] { background-color: var(--hover) !important; }
+[data-theme="thunder"] .border-\[\#333\] { border-color: var(--border-hover) !important; }
+[data-theme="thunder"] .bg-\[\#161616\] { background-color: var(--surface) !important; }
+[data-theme="thunder"] .bg-\[\#070708\] { background-color: var(--bg) !important; }
+[data-theme="thunder"] .accent-\[\#6366f1\] { accent-color: var(--accent) !important; }
+[data-theme="thunder"] .bg-\[\#222\] { background-color: var(--hover) !important; }
+[data-theme="thunder"] .bg-\[\#0a0a0a\] { background-color: var(--bg) !important; }
+[data-theme="thunder"] .bg-\[\#090909\] { background-color: var(--bg) !important; }
+[data-theme="thunder"] .bg-\[\#080808\] { background-color: var(--bg) !important; }
+[data-theme="thunder"] .divide-\[\#1a1a1a\] { border-color: var(--border) !important; }
+[data-theme="thunder"] .border-\[\#141414\] { border-color: var(--surface) !important; }
+[data-theme="thunder"] .bg-\[\#818cf8\] { background-color: var(--accent-text) !important; }
+[data-theme="thunder"] .bg-\[\#0f0f0f\] { background-color: var(--bg) !important; }
+[data-theme="thunder"] .bg-\[\#0b0b0b\] { background-color: var(--bg) !important; }
+[data-theme="thunder"] .bg-\[\#0a0912\] { background-color: var(--bg) !important; }
+[data-theme="thunder"] .shadow-\[\#6366f1\] { --tw-shadow-color: var(--accent) !important; }
+[data-theme="thunder"] .focus\:border-\[\#6366f1\]:focus { border-color: var(--accent) !important; }
+[data-theme="thunder"] .hover\:bg-\[\#5558e8\]:hover { background-color: var(--accent-hover) !important; }
+[data-theme="thunder"] .hover\:border-\[\#3a3a3a\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="thunder"] .hover\:bg-\[\#6366f1\]:hover { background-color: var(--accent) !important; }
+[data-theme="thunder"] .hover\:bg-\[\#141414\]:hover { background-color: var(--surface) !important; }
+[data-theme="thunder"] .hover\:border-\[\#6366f1\]:hover { border-color: var(--accent) !important; }
+[data-theme="thunder"] .hover\:border-\[\#2a2a2a\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="thunder"] .hover\:border-\[\#333\]:hover { border-color: var(--border-hover) !important; }
+[data-theme="thunder"] .hover\:bg-\[\#222\]:hover { background-color: var(--hover) !important; }
+[data-theme="thunder"] .hover\:text-\[\#818cf8\]:hover { color: var(--accent-text) !important; }
+[data-theme="thunder"] .hover\:bg-\[\#2a2a2a\]:hover { background-color: var(--hover) !important; }
+[data-theme="thunder"] .hover\:bg-\[\#1e1e1e\]:hover { background-color: var(--panel) !important; }
+[data-theme="thunder"] .hover\:bg-\[\#161616\]:hover { background-color: var(--surface) !important; }
+
+/* Light theme only: white-opacity overlay utilities recompute
+   against a dark foreground since base surfaces flip to white.
+   Dark/Midnight/Thunder keep the original white overlays. */
+[data-theme="light"] .text-white { color: var(--fg) !important; }
+[data-theme="light"] .text-white\/4 { color: rgba(var(--fg-rgb),0.04) !important; }
+[data-theme="light"] .bg-white\/4 { background-color: rgba(var(--tint-rgb),0.04) !important; }
+[data-theme="light"] .border-white\/4 { border-color: rgba(var(--tint-rgb),0.04) !important; }
+[data-theme="light"] .fill-white\/4 { fill: rgba(var(--tint-rgb),0.04) !important; }
+[data-theme="light"] .text-white\/5 { color: rgba(var(--fg-rgb),0.05) !important; }
+[data-theme="light"] .bg-white\/5 { background-color: rgba(var(--tint-rgb),0.05) !important; }
+[data-theme="light"] .border-white\/5 { border-color: rgba(var(--tint-rgb),0.05) !important; }
+[data-theme="light"] .fill-white\/5 { fill: rgba(var(--tint-rgb),0.05) !important; }
+[data-theme="light"] .text-white\/8 { color: rgba(var(--fg-rgb),0.08) !important; }
+[data-theme="light"] .bg-white\/8 { background-color: rgba(var(--tint-rgb),0.08) !important; }
+[data-theme="light"] .border-white\/8 { border-color: rgba(var(--tint-rgb),0.08) !important; }
+[data-theme="light"] .fill-white\/8 { fill: rgba(var(--tint-rgb),0.08) !important; }
+[data-theme="light"] .text-white\/10 { color: rgba(var(--fg-rgb),0.1) !important; }
+[data-theme="light"] .bg-white\/10 { background-color: rgba(var(--tint-rgb),0.1) !important; }
+[data-theme="light"] .border-white\/10 { border-color: rgba(var(--tint-rgb),0.1) !important; }
+[data-theme="light"] .fill-white\/10 { fill: rgba(var(--tint-rgb),0.1) !important; }
+[data-theme="light"] .text-white\/12 { color: rgba(var(--fg-rgb),0.12) !important; }
+[data-theme="light"] .bg-white\/12 { background-color: rgba(var(--tint-rgb),0.12) !important; }
+[data-theme="light"] .border-white\/12 { border-color: rgba(var(--tint-rgb),0.12) !important; }
+[data-theme="light"] .fill-white\/12 { fill: rgba(var(--tint-rgb),0.12) !important; }
+[data-theme="light"] .text-white\/15 { color: rgba(var(--fg-rgb),0.15) !important; }
+[data-theme="light"] .bg-white\/15 { background-color: rgba(var(--tint-rgb),0.15) !important; }
+[data-theme="light"] .border-white\/15 { border-color: rgba(var(--tint-rgb),0.15) !important; }
+[data-theme="light"] .fill-white\/15 { fill: rgba(var(--tint-rgb),0.15) !important; }
+[data-theme="light"] .text-white\/20 { color: rgba(var(--fg-rgb),0.2) !important; }
+[data-theme="light"] .bg-white\/20 { background-color: rgba(var(--tint-rgb),0.2) !important; }
+[data-theme="light"] .border-white\/20 { border-color: rgba(var(--tint-rgb),0.2) !important; }
+[data-theme="light"] .fill-white\/20 { fill: rgba(var(--tint-rgb),0.2) !important; }
+[data-theme="light"] .text-white\/25 { color: rgba(var(--fg-rgb),0.25) !important; }
+[data-theme="light"] .bg-white\/25 { background-color: rgba(var(--tint-rgb),0.25) !important; }
+[data-theme="light"] .border-white\/25 { border-color: rgba(var(--tint-rgb),0.25) !important; }
+[data-theme="light"] .fill-white\/25 { fill: rgba(var(--tint-rgb),0.25) !important; }
+[data-theme="light"] .text-white\/30 { color: rgba(var(--fg-rgb),0.3) !important; }
+[data-theme="light"] .bg-white\/30 { background-color: rgba(var(--tint-rgb),0.3) !important; }
+[data-theme="light"] .border-white\/30 { border-color: rgba(var(--tint-rgb),0.3) !important; }
+[data-theme="light"] .fill-white\/30 { fill: rgba(var(--tint-rgb),0.3) !important; }
+[data-theme="light"] .text-white\/35 { color: rgba(var(--fg-rgb),0.35) !important; }
+[data-theme="light"] .bg-white\/35 { background-color: rgba(var(--tint-rgb),0.35) !important; }
+[data-theme="light"] .border-white\/35 { border-color: rgba(var(--tint-rgb),0.35) !important; }
+[data-theme="light"] .fill-white\/35 { fill: rgba(var(--tint-rgb),0.35) !important; }
+[data-theme="light"] .text-white\/40 { color: rgba(var(--fg-rgb),0.4) !important; }
+[data-theme="light"] .bg-white\/40 { background-color: rgba(var(--tint-rgb),0.4) !important; }
+[data-theme="light"] .border-white\/40 { border-color: rgba(var(--tint-rgb),0.4) !important; }
+[data-theme="light"] .fill-white\/40 { fill: rgba(var(--tint-rgb),0.4) !important; }
+[data-theme="light"] .text-white\/45 { color: rgba(var(--fg-rgb),0.45) !important; }
+[data-theme="light"] .bg-white\/45 { background-color: rgba(var(--tint-rgb),0.45) !important; }
+[data-theme="light"] .border-white\/45 { border-color: rgba(var(--tint-rgb),0.45) !important; }
+[data-theme="light"] .fill-white\/45 { fill: rgba(var(--tint-rgb),0.45) !important; }
+[data-theme="light"] .text-white\/50 { color: rgba(var(--fg-rgb),0.5) !important; }
+[data-theme="light"] .bg-white\/50 { background-color: rgba(var(--tint-rgb),0.5) !important; }
+[data-theme="light"] .border-white\/50 { border-color: rgba(var(--tint-rgb),0.5) !important; }
+[data-theme="light"] .fill-white\/50 { fill: rgba(var(--tint-rgb),0.5) !important; }
+[data-theme="light"] .text-white\/55 { color: rgba(var(--fg-rgb),0.55) !important; }
+[data-theme="light"] .bg-white\/55 { background-color: rgba(var(--tint-rgb),0.55) !important; }
+[data-theme="light"] .border-white\/55 { border-color: rgba(var(--tint-rgb),0.55) !important; }
+[data-theme="light"] .fill-white\/55 { fill: rgba(var(--tint-rgb),0.55) !important; }
+[data-theme="light"] .text-white\/60 { color: rgba(var(--fg-rgb),0.6) !important; }
+[data-theme="light"] .bg-white\/60 { background-color: rgba(var(--tint-rgb),0.6) !important; }
+[data-theme="light"] .border-white\/60 { border-color: rgba(var(--tint-rgb),0.6) !important; }
+[data-theme="light"] .fill-white\/60 { fill: rgba(var(--tint-rgb),0.6) !important; }
+[data-theme="light"] .text-white\/65 { color: rgba(var(--fg-rgb),0.65) !important; }
+[data-theme="light"] .bg-white\/65 { background-color: rgba(var(--tint-rgb),0.65) !important; }
+[data-theme="light"] .border-white\/65 { border-color: rgba(var(--tint-rgb),0.65) !important; }
+[data-theme="light"] .fill-white\/65 { fill: rgba(var(--tint-rgb),0.65) !important; }
+[data-theme="light"] .text-white\/70 { color: rgba(var(--fg-rgb),0.7) !important; }
+[data-theme="light"] .bg-white\/70 { background-color: rgba(var(--tint-rgb),0.7) !important; }
+[data-theme="light"] .border-white\/70 { border-color: rgba(var(--tint-rgb),0.7) !important; }
+[data-theme="light"] .fill-white\/70 { fill: rgba(var(--tint-rgb),0.7) !important; }
+[data-theme="light"] .text-white\/75 { color: rgba(var(--fg-rgb),0.75) !important; }
+[data-theme="light"] .bg-white\/75 { background-color: rgba(var(--tint-rgb),0.75) !important; }
+[data-theme="light"] .border-white\/75 { border-color: rgba(var(--tint-rgb),0.75) !important; }
+[data-theme="light"] .fill-white\/75 { fill: rgba(var(--tint-rgb),0.75) !important; }
+[data-theme="light"] .text-white\/80 { color: rgba(var(--fg-rgb),0.8) !important; }
+[data-theme="light"] .bg-white\/80 { background-color: rgba(var(--tint-rgb),0.8) !important; }
+[data-theme="light"] .border-white\/80 { border-color: rgba(var(--tint-rgb),0.8) !important; }
+[data-theme="light"] .fill-white\/80 { fill: rgba(var(--tint-rgb),0.8) !important; }
+[data-theme="light"] .text-white\/85 { color: rgba(var(--fg-rgb),0.85) !important; }
+[data-theme="light"] .bg-white\/85 { background-color: rgba(var(--tint-rgb),0.85) !important; }
+[data-theme="light"] .border-white\/85 { border-color: rgba(var(--tint-rgb),0.85) !important; }
+[data-theme="light"] .fill-white\/85 { fill: rgba(var(--tint-rgb),0.85) !important; }
+[data-theme="light"] .text-white\/90 { color: rgba(var(--fg-rgb),0.9) !important; }
+[data-theme="light"] .bg-white\/90 { background-color: rgba(var(--tint-rgb),0.9) !important; }
+[data-theme="light"] .border-white\/90 { border-color: rgba(var(--tint-rgb),0.9) !important; }
+[data-theme="light"] .fill-white\/90 { fill: rgba(var(--tint-rgb),0.9) !important; }
+
+/* --- Legal / static info pages (Privacy, Terms, About, etc.) --- */
+/* Purely additive; scoped to .tb-legal-prose so it cannot affect any other page. */
+.tb-legal-prose ul { list-style: disc; padding-left: 1.25rem; }
+.tb-legal-prose ol { list-style: decimal; padding-left: 1.25rem; }
+.tb-legal-prose li { margin-bottom: 0.35rem; }
+.tb-legal-prose a { color: #818cf8; text-decoration: none; }
+.tb-legal-prose a:hover { color: #22d3ee; text-decoration: underline; }
+.tb-legal-prose strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+/* --- API Key Reminder (floating, dismissible) --- */
+/* Purely additive; scoped to .tbkr-* classes so it cannot affect any other UI. */
+.tbkr-card {
+  position: fixed;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,102,241,0.10);
+  overflow: hidden;
+}
+.tbkr-glow {
+  position: absolute;
+  inset: -40% -40% auto auto;
+  width: 140px;
+  height: 140px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(99,102,241,0.35), transparent 70%);
+  pointer-events: none;
+  animation: tbkrPulse 3.2s ease-in-out infinite;
+}
+@keyframes tbkrPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.9;  transform: scale(1.12); }
+}
+.tbkr-in {
+  animation: tbkrSlideFade 0.42s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes tbkrSlideFade {
+  from { opacity: 0; transform: translateY(-10px) translateX(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tbkr-glow, .tbkr-in { animation: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Chat Tester Panel — Premium Redesign (v87)
+   Scoped entirely under .ctp- class names. Purely additive: touches
+   nothing outside the Chat Tester panel, no existing selector is
+   modified or removed.
+   ══════════════════════════════════════════════════════════════════ */
+
+.ctp-root {
+  position: relative;
+  background:
+    radial-gradient(600px circle at 15% -5%, rgba(99,102,241,0.10), transparent 55%),
+    radial-gradient(500px circle at 105% 25%, rgba(139,92,246,0.08), transparent 55%),
+    #08080a;
+  isolation: isolate;
+}
+
+.ctp-header {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.ctp-title {
+  background: linear-gradient(90deg, #e5e5ff, #a5b4fc 60%, #c4b5fd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ctp-dot-live {
+  box-shadow: 0 0 0 0 rgba(52,211,153,0.55);
+  animation: ctpDotPulse 2s ease-in-out infinite;
+}
+@keyframes ctpDotPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(52,211,153,0.55); }
+  70%  { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+  100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+}
+
+.ctp-iconbtn {
+  transition: color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.ctp-iconbtn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.06); }
+.ctp-iconbtn:active { transform: translateY(0) scale(0.94); }
+
+.ctp-startbtn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 4px 18px rgba(99,102,241,0.35);
+  transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.ctp-startbtn:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 6px 22px rgba(99,102,241,0.45); }
+.ctp-startbtn:active { transform: translateY(0) scale(0.97); }
+
+/* Message scroll area with a refined thin gradient scrollbar */
+.ctp-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,92,246,0.35) transparent;
+  scroll-behavior: smooth;
+}
+.ctp-scroll::-webkit-scrollbar { width: 6px; }
+.ctp-scroll::-webkit-scrollbar-track { background: transparent; }
+.ctp-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(129,140,248,0.5), rgba(167,139,250,0.5));
+  border-radius: 8px;
+}
+.ctp-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(129,140,248,0.8), rgba(167,139,250,0.8));
+}
+
+/* Message entrance: fade + slide + scale, 60fps-friendly (transform/opacity only) */
+@keyframes ctpMsgIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ctp-msg-in { animation: ctpMsgIn 0.32s cubic-bezier(0.16,1,0.3,1) both; }
+
+.ctp-bubble-user {
+  background: linear-gradient(135deg, #6366f1, #7c5ce8 55%, #8b5cf6);
+  box-shadow: 0 2px 10px rgba(99,102,241,0.35), 0 1px 0 rgba(255,255,255,0.15) inset;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.ctp-bubble-user:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(99,102,241,0.45), 0 1px 0 rgba(255,255,255,0.15) inset; }
+
+.ctp-bubble-bot {
+  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ctp-bubble-bot:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35), 0 0 0 1px rgba(139,92,246,0.08);
+}
+
+.ctp-cursor {
+  background: linear-gradient(180deg, #a5b4fc, #c4b5fd);
+  animation: ctpBlink 0.9s ease-in-out infinite;
+}
+@keyframes ctpBlink { 0%,100% { opacity: 1; } 50% { opacity: 0.15; } }
+
+/* Typing indicator */
+.ctp-typing {
+  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+.ctp-typing-dot {
+  background: linear-gradient(135deg, #a5b4fc, #c4b5fd);
+  animation: ctpTypingBounce 1.1s ease-in-out infinite;
+}
+@keyframes ctpTypingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* Citation + choice chips */
+.ctp-chip {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03));
+  transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.ctp-chip:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.03);
+  background: linear-gradient(180deg, rgba(99,102,241,0.18), rgba(99,102,241,0.08));
+  box-shadow: 0 4px 14px rgba(99,102,241,0.28);
+}
+.ctp-chip:active:not(:disabled) { transform: translateY(0) scale(0.97); }
+
+.ctp-citation {
+  transition: transform 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.ctp-citation:hover { transform: translateY(-1px); }
+
+/* Ripple click effect — spawned via JS span.ctp-ripple */
+.ctp-ripple-host { position: relative; overflow: hidden; }
+.ctp-ripple {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.45);
+  transform: scale(0);
+  pointer-events: none;
+  animation: ctpRipple 0.55s ease-out forwards;
+}
+@keyframes ctpRipple {
+  to { transform: scale(2.2); opacity: 0; }
+}
+
+/* Input bar */
+.ctp-inputbar {
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.ctp-input {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.09);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.ctp-input:focus {
+  border-color: rgba(129,140,248,0.55);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.14);
+  background: rgba(255,255,255,0.05);
+}
+
+.ctp-sendbtn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 4px 16px rgba(99,102,241,0.4);
+  transition: filter 0.15s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.15s ease;
+}
+.ctp-sendbtn:hover:not(:disabled) { filter: brightness(1.1); transform: scale(1.06); }
+.ctp-sendbtn:active:not(:disabled) { transform: scale(0.93); }
+.ctp-sendbtn:disabled { box-shadow: none; }
+
+.ctp-emptystate-icon {
+  background: linear-gradient(135deg, rgba(99,102,241,0.18), rgba(139,92,246,0.10));
+  border: 1px solid rgba(129,140,248,0.25);
+  box-shadow: 0 4px 20px rgba(99,102,241,0.15);
+  animation: ctpFloat 3.4s ease-in-out infinite;
+}
+@keyframes ctpFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.ctp-apikey-card {
+  background: linear-gradient(180deg, rgba(99,102,241,0.09), rgba(99,102,241,0.03));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctp-msg-in, .ctp-dot-live, .ctp-typing-dot, .ctp-cursor, .ctp-emptystate-icon, .ctp-ripple {
+    animation: none !important;
+  }
+}
+
+/* ── Smart Shop Assistant — Product Image Support ────────────────────────── */
+
+.shimmer {
+  background: linear-gradient(
+    100deg,
+    rgba(255,255,255,0.03) 30%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.03) 70%
+  );
+  background-size: 200% 100%;
+  animation: shopShimmer 1.4s ease-in-out infinite;
+}
+@keyframes shopShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.shop-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.shop-card:hover {
+  transform: translateY(-3px) scale(1.012);
+  border-color: rgba(129,140,248,0.35);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(99,102,241,0.12);
+}
+.shop-card:active { transform: translateY(-1px) scale(0.99); }
+
+.shop-dropzone {
+  border: 1.5px dashed rgba(255,255,255,0.16);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.shop-dropzone.dragging {
+  border-color: rgba(99,102,241,0.6);
+  background-color: rgba(99,102,241,0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer, .shop-card { animation: none !important; transition: none !important; }
+  .shop-card:hover { transform: none !important; }
+}
+
+/* ── Interactive Tutorial System (NEW) ───────────────────────────────
+   Reusable across every feature. The dim/cutout is a single fixed box
+   positioned over the target with an oversized box-shadow — no SVG
+   mask needed, works identically in light/dark, and the whole layer is
+   pointer-events:none so it never blocks the real UI underneath. */
+.tb-tutorial-highlight {
+  position: fixed;
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 2147483000;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.55), 0 0 0 2px var(--accent), 0 0 24px var(--accent-glow);
+  transition: top 0.28s cubic-bezier(0.22,1,0.36,1), left 0.28s cubic-bezier(0.22,1,0.36,1),
+              width 0.28s cubic-bezier(0.22,1,0.36,1), height 0.28s cubic-bezier(0.22,1,0.36,1);
+}
+[data-theme="light"] .tb-tutorial-highlight {
+  box-shadow: 0 0 0 9999px rgba(15,15,20,0.35), 0 0 0 2px var(--accent), 0 0 24px var(--accent-glow);
+}
+
+.tb-tutorial-card {
+  background: var(--panel);
+  border-color: var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: tbTutorialCardIn 0.22s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes tbTutorialCardIn {
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tb-tutorial-pointer-bounce {
+  animation: tbTutorialBounce 1.1s ease-in-out infinite;
+}
+@keyframes tbTutorialBounce {
+  0%, 100% { transform: translate(-30%, -10%) translateY(0); }
+  50%      { transform: translate(-30%, -10%) translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tb-tutorial-highlight { transition: none !important; }
+  .tb-tutorial-card { animation: none !important; }
+  .tb-tutorial-pointer-bounce { animation: none !important; }
+}

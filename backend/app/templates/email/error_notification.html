@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ app_name }} server error{% endblock %}
+{% block content %}
+  <h1 style="margin:0 0 16px 0; font-size:20px; color:#f87171; font-weight:700;">⚠️ Unhandled server error</h1>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px 0; font-size:13px; color:#e5e7eb;">
+    <tr>
+      <td style="padding:4px 0; color:#9ca3af; width:110px;">Time (UTC)</td>
+      <td style="padding:4px 0;">{{ timestamp }}</td>
+    </tr>
+    {% if request_method %}
+    <tr>
+      <td style="padding:4px 0; color:#9ca3af;">Request</td>
+      <td style="padding:4px 0;">{{ request_method }} {{ request_path }}</td>
+    </tr>
+    {% endif %}
+  </table>
+  <p style="margin:0 0 8px 0; color:#9ca3af; font-size:13px;">Error summary:</p>
+  <pre style="margin:0; padding:12px; background-color:#0b0b12; border:1px solid rgba(255,255,255,0.08); border-radius:8px; color:#f87171; font-size:12px; white-space:pre-wrap; word-break:break-word;">{{ error_summary }}</pre>
+  <p style="margin:16px 0 0 0; color:#6b7280; font-size:12px;">
+    Full stack trace and request context are in the application server logs. This alert is throttled to avoid duplicate notifications during an incident.
+  </p>
+{% endblock %}
+{% block footer %}
+This is an internal system alert sent to {{ app_name }} administrators.
+{% endblock %}

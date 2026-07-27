@@ -1,0 +1,85 @@
+# ThunderBots Backend v3 — Python 3.12+
+
+# Web Framework
+fastapi==0.115.5
+uvicorn[standard]==0.32.0
+uvloop==0.21.0
+httptools==0.6.4
+python-multipart==0.0.12
+
+# Database
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+alembic==1.14.0
+
+# Config & Validation
+pydantic==2.10.0
+pydantic-settings==2.6.1
+email-validator==2.2.0
+
+# Auth
+python-jose[cryptography]==3.3.0
+cryptography==44.0.0   # explicit: used directly by ai_engine.py for Fernet API-key encryption
+# Auth — v6 fix: passlib==1.7.4 is incompatible with bcrypt>=4.0.0 on
+# Python 3.12. passlib calls bcrypt.__about__ (removed in 4.x) and its
+# internal secret encoding exceeds the 72-byte limit now strictly enforced.
+# Dropping passlib entirely and calling bcrypt directly eliminates the issue.
+bcrypt==4.2.0
+
+# Auth — Google SSO + TOTP 2FA (NEW)
+# google-auth: verifies Google ID tokens (signature, issuer, audience, expiry)
+# against Google's published JWKS. Its default transport (google.auth.transport
+# .requests) is built on `requests`, hence the explicit pin below.
+google-auth==2.36.0
+requests==2.32.3
+# pyotp: RFC 6238 TOTP secret generation + code verification (30s step, ±1
+# window tolerance for clock drift) — used for optional 2FA.
+pyotp==2.9.0
+# qrcode: renders the otpauth:// provisioning URI as an SVG for the 2FA
+# setup screen. Uses the SVG path image factory only, so it does NOT pull
+# in Pillow — no new binary/image dependency for the backend.
+qrcode==7.4.2
+Pillow==10.4.0
+
+# Cache
+redis[asyncio]==5.2.0
+
+# AI Provider — Google Gemini only
+google-generativeai==0.8.3  # Gemini
+httpx==0.28.0            # shared async HTTP client (email, messaging integrations, TTS, etc.)
+
+# Knowledge Base
+chromadb==0.5.20
+pdfplumber==0.11.4
+python-docx==1.1.2
+
+# Smart Shop Assistant — Excel + Google Sheets sync (NEW)
+# openpyxl: reads/writes .xlsx for the inventory Import/Export buttons and
+# the AI Business Advisor Excel report export.
+openpyxl==3.1.5
+# reportlab: AI Business Advisor PDF report export.
+reportlab==4.4.10
+# gspread + google-auth (google-auth already pinned above for SSO): talks to
+# the Google Sheets API using a per-shop service-account credential. Sync is
+# fully OFF (zero API calls) until a shop owner connects a spreadsheet via
+# POST /shop-assistant/shops/{id}/sync/google-sheets.
+gspread==6.1.4
+
+# Utilities
+python-json-logger==3.2.0
+
+# Email & Notification Service — templating only. SMTP uses the stdlib
+# (smtplib) via asyncio.to_thread; SendGrid uses the already-present httpx.
+jinja2==3.1.4
+
+# AI Call Agent — realtime calls (NEW, Voice AI Part 3)
+# websockets: outbound WS client used to stream inbound call audio to the
+# Deepgram realtime STT API (Twilio's own Media Stream WS is served by
+# FastAPI/Starlette directly, no client library needed for that side).
+websockets==13.1
+# pydub: decodes TTS provider output (mp3/wav from the EXISTING
+# services/tts_engine.py — no second voice engine) to raw PCM so it can be
+# resampled to 8kHz mu-law for Twilio playback. Requires the `ffmpeg`
+# system package (see Dockerfile). Downsampling/mu-law encoding itself uses
+# the stdlib `audioop` module (Python 3.12) — no numpy/scipy needed.
+pydub==0.25.1
